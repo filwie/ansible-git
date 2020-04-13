@@ -1,0 +1,31 @@
+---
+- name: Assert facts are available
+  assert:
+    that:
+      - ansible_env.HOME is defined
+      - ansible_system is defined
+    success_msg: "All prerequirements are met"
+    fail_msg: "Variables are not available. Did you gather facts?"
+
+- name: Install git
+  package:
+    name: git
+  become: "{{ git_become_to_install }}"
+
+- name: Generate gitconfig
+  template:
+    src: gitconfig.j2
+    dest: "{{ git_gitconfig_path }}"
+
+- name: Put global gitignore file in place
+  get_url:
+    url: "https://gitignore.io/api/{{ git_gitignore_tools | join(',') }}"
+    dest: "{{ git_gitignore_path }}"
+    backup: true
+
+- name: Make sure neovim is installed
+  package:
+    name: neovim
+    state: present
+  become: true
+  when: git_core_editor == "nvim"

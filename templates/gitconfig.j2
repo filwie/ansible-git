@@ -1,0 +1,37 @@
+# vi: tabstop=8 shiftwidth=8 noexpandtab cindent:
+
+{%- if git_user_name and git_user_email %}
+[user]
+	name = {{ git_user_name }}
+	email = {{ git_user_email }}
+{%- endif %}
+
+[push]
+	default = matching
+
+[credential]
+	helper = cache --timeout=3600
+
+[core]
+	excludesfile = {{ git_gitignore_path }}
+	editor = {{ git_core_editor }}
+
+[merge]
+	tool = {{ git_tools.keys() | first }}
+
+[mergetool]
+	prompt = true
+
+[diff]
+	tool = {{ git_tools.keys() | first }}
+
+{% for tool, cmd in git_tools.items() %}
+[difftool "{{ tool }}"]
+	cmd = {{ cmd }}
+{% endfor %}
+
+[alias]
+{% for alias, cmd in git_aliases.items() %}
+	{{ alias }} = {{ cmd }}
+{% endfor %}
+

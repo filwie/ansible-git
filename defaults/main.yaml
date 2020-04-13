@@ -1,0 +1,28 @@
+---
+git_user_name: ""
+git_user_email: ""
+
+git_gitconfig_path: "{{ ansible_env.HOME }}/.gitconfig"
+git_gitignore_path: "{{ ansible_env.HOME }}/.gitignore"
+git_gitignore_tools:
+  - ansible
+  - c
+  - code
+  - emacs
+  - go
+  - kotlin
+  - node
+  - python
+  - ruby
+  - sass
+  - vim
+  - zsh
+
+git_aliases:
+  aliases: "!git config -l | grep alias | cut -c 7-"
+
+git_core_editor: nvim
+git_tools:
+  nvimdiff: "nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'"
+
+git_become_to_install: "{{ true if ansible_system != 'Darwin' else false }}"
