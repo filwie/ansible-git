@@ -27,5 +27,5 @@
   package:
     name: neovim
     state: present
-  become: true
+  become: "{{ git_become_to_install }}"
   when: git_core_editor == "nvim"
