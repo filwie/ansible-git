@@ -1,6 +1,6 @@
 # vi: tabstop=8 shiftwidth=8 noexpandtab cindent:
 
-{%- if git_user_name and git_user_email %}
+{% if git_user_name and git_user_email %}
 [user]
 	name = {{ git_user_name }}
 	email = {{ git_user_email }}
